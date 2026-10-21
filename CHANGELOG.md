@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [0.8.16] - 2026-10-21
+### Highlights
+- **macOS: shortcut keys now go through a virtual HID keyboard.** When a button sends a keyboard shortcut, OpenLogi now presses the keys on a virtual keyboard named "OpenLogi Virtual Keyboard" instead of posting software key events. macOS handles these keys the way it handles keys from a USB keyboard. This is for shortcuts that work from a real keyboard but did not work from OpenLogi ([#1653](https://github.com/AprilNEA/OpenLogi/issues/1653), [#744](https://github.com/AprilNEA/OpenLogi/issues/744)). Apple granted OpenLogi the restricted HID virtual-device entitlement for this, and the signed OpenLogi Agent carries it ([#1918](https://github.com/AprilNEA/OpenLogi/pull/1918), [#1929](https://github.com/AprilNEA/OpenLogi/pull/1929)).
+  - You do not need to grant a new permission. The agent's signing identity did not change, so your Accessibility and Input Monitoring grants keep working.
+  - If macOS does not let OpenLogi create the virtual keyboard, OpenLogi types the keys the old way.
+  - Only the signed release builds have it. Builds from source and dev builds still use the old way.
+  - To check that it is active, run `ioreg -r -c IOHIDUserDevice | grep "OpenLogi Virtual Keyboard"` while OpenLogi runs.
+  - If a shortcut now behaves differently than in 0.8.15, please open an issue.
 
 ### Added
 
